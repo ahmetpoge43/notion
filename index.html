@@ -3,46 +3,175 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Notion Market Widget</title>
+  <title>Notion 3'lü Canlı Grafik Widget'ı (5D Mumlar)</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background-color: #191919; /* Notion karanlık mod arka planı ile uyumlu */
+    }
+    body {
+      background-color: #191919; /* Notion Dark Mode Arka Planı */
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: 12px;
+      color: #e0e0e0;
+    }
+    .widget-grid {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      width: 100%;
+      height: calc(100vh - 24px);
+      min-height: 380px;
+    }
+    .widget-card {
+      flex: 1;
+      background-color: #202020;
+      border: 1px solid #2e2e2e;
+      border-radius: 8px;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .widget-header {
+      padding: 8px 12px;
+      background-color: #262626;
+      border-bottom: 1px solid #2e2e2e;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background-color: #333;
+      color: #aaa;
+    }
+    .widget-body {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    /* Ekran daraldığında dikey sıralama */
+    @media (max-width: 768px) {
+      .widget-grid {
+        flex-direction: column;
+        height: auto;
+      }
+      .widget-card {
+        height: 320px;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- TradingView Market Overview Widget -->
-<div class="tradingview-widget-container">
-  <div class="tradingview-widget-container__widget"></div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-  {
-    "colorTheme": "dark",
-    "dateRange": "1D",
-    "showChart": true,
-    "locale": "tr",
-    "width": "100%",
-    "height": "100%",
-    "largeChartUrl": "",
-    "isTransparent": true,
-    "showSymbolLogo": true,
-    "showFloatingTooltip": true,
-    "tabs": [
-      {
-        "title": "Piyasalar",
-        "symbols": [
-          { "s": "OANDA:XAUUSD", "d": "ONS ALTIN (XAUUSD)" },
-          { "s": "NASDAQ:NDX", "d": "NASDAQ 100 (NDX)" },
-          { "s": "INDEX:DAX", "d": "DAX 40 (GER40)" }
-        ]
-      }
-    ]
-  }
+  <div class="widget-grid">
+    
+    <!-- ONS ALTIN (XAUUSD) -->
+    <div class="widget-card">
+      <div class="widget-header">
+        <span>OANDA:XAUUSD</span>
+        <span class="badge">5M / 1 Saat</span>
+      </div>
+      <div class="widget-body">
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+          <div id="tradingview_xauusd" style="height:100%;width:100%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NASDAQ 100 (NDX) -->
+    <div class="widget-card">
+      <div class="widget-header">
+        <span>NASDAQ:NDX</span>
+        <span class="badge">5M / 1 Saat</span>
+      </div>
+      <div class="widget-body">
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+          <div id="tradingview_ndx" style="height:100%;width:100%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAX 40 (GER40) -->
+    <div class="widget-card">
+      <div class="widget-header">
+        <span>INDEX:DAX</span>
+        <span class="badge">5M / 1 Saat</span>
+      </div>
+      <div class="widget-body">
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+          <div id="tradingview_dax" style="height:100%;width:100%"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TradingView Widget Scripti -->
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+    // XAUUSD Grafiği
+    new TradingView.widget({
+      "autosize": true,
+      "symbol": "OANDA:XAUUSD",
+      "interval": "5",
+      "range": "1H",
+      "timezone": "Etc/UTC",
+      "theme": "dark",
+      "style": "1", // Mum grafiği
+      "locale": "tr",
+      "toolbar_bg": "#191919",
+      "enable_publishing": false,
+      "hide_top_toolbar": true,
+      "hide_legend": true,
+      "save_image": false,
+      "container_id": "tradingview_xauusd"
+    });
+
+    // NASDAQ NDX Grafiği
+    new TradingView.widget({
+      "autosize": true,
+      "symbol": "NASDAQ:NDX",
+      "interval": "5",
+      "range": "1H",
+      "timezone": "Etc/UTC",
+      "theme": "dark",
+      "style": "1",
+      "locale": "tr",
+      "toolbar_bg": "#191919",
+      "enable_publishing": false,
+      "hide_top_toolbar": true,
+      "hide_legend": true,
+      "save_image": false,
+      "container_id": "tradingview_ndx"
+    });
+
+    // DAX Grafiği
+    new TradingView.widget({
+      "autosize": true,
+      "symbol": "INDEX:DAX",
+      "interval": "5",
+      "range": "1H",
+      "timezone": "Etc/UTC",
+      "theme": "dark",
+      "style": "1",
+      "locale": "tr",
+      "toolbar_bg": "#191919",
+      "enable_publishing": false,
+      "hide_top_toolbar": true,
+      "hide_legend": true,
+      "save_image": false,
+      "container_id": "tradingview_dax"
+    });
   </script>
-</div>
 
 </body>
 </html>

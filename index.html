@@ -24,14 +24,14 @@
     }
     .card-item {
       flex: 1;
-      min-width: 0; /* Kartların düzgün daralması için */
+      min-width: 0; /* Kartların esnek daralması için */
       background-color: #202020;
       border: 1px solid #2e2e2e;
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
-    /* Ekran daraldığında (Mobil/Dar bloklarda) dikey düzen */
+    /* Ekran daraldığında (Mobil/Dar alanlarda) dikey düzen */
     @media (max-width: 600px) {
       .cards-grid {
         flex-direction: column;
@@ -59,13 +59,13 @@
       </div>
     </div>
 
-    <!-- NASDAQ 100 (NDX) KARTI -->
+    <!-- US 100 (NASDAQ 100 CFD) KARTI -->
     <div class="card-item">
       <div class="tradingview-widget-container">
         <div class="tradingview-widget-container__widget"></div>
         <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
         {
-          "symbol": "NASDAQ:NDX",
+          "symbol": "CAPITALCOM:US100",
           "width": "100%",
           "colorTheme": "dark",
           "isTransparent": true,
